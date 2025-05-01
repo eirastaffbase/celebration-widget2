@@ -260,8 +260,12 @@ export const CelebrationWidget = ({ dateformat, anniversaryprofilefieldid, inclu
       }
       htmlList.push(usersGroup.map(
         theUser => {
-          const hasAvatar = (typeof(theUser.avatar) !== 'undefined' || imageurl !== undefined),
-              userLink = we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + theUser.id;
+          const hasAvatar = (typeof(theUser.avatar) !== 'undefined' || imageurl !== undefined);
+          const base =
+          we.authMgr.getBranchConfig()?.whitelabelConfig?.frontendURL ||
+          window.location.origin;      
+          const userLink = `${base}/openlink/profile/${theUser.id}`;  
+
           return <div key={theUser.id + 'divInner'} id={theUser.id} className="cw-entries" style={divstyles.container}>
                     <a key={theUser.id + 'a'} href={userLink} className="link-internal ally-focus-within">
                       {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar ? (theUser.avatar.thumb ? theUser.avatar.thumb.url : imageurl) : imageurl} alt={theUser.firstName + " " + theUser.lastName}></img> :
